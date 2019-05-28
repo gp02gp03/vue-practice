@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <ol>
+      <li v-for="item in todo" v-bind:class="item">{{item}}</li>
+    </ol>
+
+    <select>
+      <option v-for="(month,index) in month" :value="index">{{month}}</option>
+    </select>
+
+    <ul>
+      <li v-for="num in nums">{{num}}</li>
+      <li v-for="(num,key) in nums1">{{key}}:{{num}}</li>
+
+    </ul>
+    <button @click="action">Ya</button>
+
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        todo: [
+          '學會js',
+          '投遞履歷',
+          '年薪百萬'
+        ],
+        month: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        nums: [1, 2, 3, 4, 5],
+        nums1: {
+          x: 10,
+          y: 20
+        }
+      },
+      methods: {
+        action() {
+          this.nums.push(this.nums.length + 1);
+          // this.nums.pop();
+          // this.nums.shift();
+          // this.nums.unshift(0);
+          // this.nums.splice(2, 1);
+          // this.nums.sort();
+          // this.nums.reverse();
+          //this.nums.filter(elm=> elm%2 ===0);
+
+          // Vue.set(this.nums1.z, 30);
+          // this.$set(this.nums, 'z', 30);
+        }
+      }
+
+    })
+  </script>
+
+</body>
+
+</html>

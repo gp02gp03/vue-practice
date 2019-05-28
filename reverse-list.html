@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="num in nums">{{num}}</li>
+    </ul>
+
+    <button @click="all">All</button>
+    <button @click="even">Even</button>
+    <button @click="original">Original</button>
+    <button @click="sort">Sort</button>
+
+  </div>
+  <script>
+    const orgNum = [6, 7, 8, 9, 1, 2, 3, 4, 5];
+    new Vue({
+      el: '#app',
+      data: {
+        nums: orgNum
+      },
+      methods: {
+        all() {
+          nums: orgNum
+        },
+        even() {
+          this.nums = this.nums.filter(num => num % 2 === 0);
+        },
+        original() {
+          this.nums = orgNum;
+        },
+        sort() {
+          this.nums = orgNum.slice().sort();
+        }
+
+      }
+
+    });
+  </script>
+</body>
+
+</html>

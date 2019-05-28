@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <my-count :count="count"></my-count>
+    <my-button @click.native="count+=1"></my-button>
+  </div>
+  <script>
+    Vue.component('my-count', {
+      props: ['count'],
+      template: '<h1>{{count}}</h1>',
+
+    });
+
+    Vue.component('my-button', {
+      template: '<button>+1</button>',
+    });
+
+    new Vue({
+      el: '#app',
+      data: {
+        count: 0
+      }
+    });
+  </script>
+</body>
+
+</html>

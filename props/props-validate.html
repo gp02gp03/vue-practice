@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <counter :start="10"></my-component>
+  </div>
+
+  <script>
+    Vue.component('counter', {
+      //pros發生於組件正式建立之前
+      props: {
+          start:Number,
+          default:0,
+          validator(value){
+            return value<=10
+          }
+      },
+      data(){
+        return {
+            count: this.start,
+        };
+      },
+      template: `
+        <div>
+          <h1>{{count}}</h1>
+          <button @click="count+=1">+</button>
+        </div>
+      `
+    });
+
+    new Vue({
+      el: '#app',
+    });
+  </script>
+
+</body>
+
+</html>

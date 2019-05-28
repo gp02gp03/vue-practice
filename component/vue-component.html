@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <my-component></my-component>
+
+  </div>
+
+  <script>
+    //global component
+    // Vue.component('my-component', {
+    // template: '<div>My Component</div>'
+    // });
+
+    new Vue({
+      el: '#app',
+
+      //local component
+      components: {
+        'my-component': {
+          template: '<div>My Component</div>'
+        }
+      }
+    });
+  </script>
+
+</body>
+
+</html>

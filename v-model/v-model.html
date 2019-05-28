@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+  </head>
+
+  <body>
+
+    <!--
+      v-model.trim 可以刪除輸入時產生的空格
+      v-model.number 可以將字串轉換為數字
+      v-model-lazy 可以等待輸入完成後 在顯示最終輸入的值
+    -->
+    <div id="app">
+      <input type="text" v-model.lazy="msg" />
+      <h1>{{msg}}</h1>
+
+      <input type="text" v-model.number="num" />
+      <h1>{{num}}</h1>
+
+      <input type="text" v-model.trim="text" />
+      <h1>{{text}}</h1>
+
+
+    </div>
+    <script>
+    const orgNum = [6, 7, 8, 9, 1, 2, 3, 4, 5];
+    new Vue({
+      el: '#app',
+      data: {
+        msg: '',
+        num:'',
+        text:''
+      },
+    });
+  </script>
+  </body>
+
+</html>

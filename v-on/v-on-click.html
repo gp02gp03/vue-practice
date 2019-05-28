@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <my-button @my-click="clicked"></my-button>
+  </div>
+  <script>
+    Vue.component('my-button', {
+      template: '<button @click="myClick">my-button</button>',
+      methods: {
+        myClick() {
+          this.$emit('my-click', 100);
+        }
+      }
+    });
+
+    new Vue({
+      el: '#app',
+      methods: {
+        clicked(num) {
+          alert("clicked!" + num);
+        }
+      }
+
+
+    });
+  </script>
+</body>
+
+</html>

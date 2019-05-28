@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <div>
+            <button @click="component='login-form'">Login Form</button>
+            <button @click="component='user-check'">User Check</button>
+        </div>
+        <hr/>
+        <keep-alive>
+            <component :is="component"></component>
+        </keep-alive>
+    </div>
+
+    <script>
+        const API = 'http://localhost:3000'
+
+        /* User Check */
+        Vue.component("user-check", {
+            data() {
+                return {
+                    username: "",
+                    exists: false
+                }
+            },
+            methods: {
+                submit() {
+                    axios.get(`${API}/exists/${this.username}`)
+                        .then(res => {
+                            this.exists = res.data.exists;
+                        })
+                }
+            },
+            watch: {
+                username() {
+                    this.submitDebounced();
+                }
+            },
+            created() {
+                // Lodash 函式；當使用者輸入後 0.5 秒，才呼叫 submit 函式，不然就忽略;
+                this.submitDebounced = _.debounce(this.submit, 500);
+            },
+            template: `
+              <div>
+                <label>Username</label>
+                <input type="text" v-model="username"/>
+                <br/>
+                <span>{{exists}}</span>
+              </div>
+            `
+        });
+
+
+        /* Login Form */
+        Vue.component("login-form", {
+            data() {
+                return {
+                    username: "",
+                    password: "",
+                    loggedUser: null,
+                    error: "",
+                    loading: false
+                }
+            },
+            methods: {
+                submit() {
+                    // 傳資料時，讓使用者無法再輸入;
+                    this.loading = true;
+
+                    axios.post(`${API}/login`, {
+                            username: this.username,
+                            password: this.password
+                        })
+                        .then(res => {
+                            this.loading = false;
+                            if (res.data.success) { // 如果有這筆資料;
+                                this.loggedUser = res.data.name;
+                            } else {
+                                // 沒有這筆資料就顯示 error;
+                                this.error = "Incorrect usename/password.";
+                            }
+                        })
+                }
+            },
+            watch: {
+                // 當使用者輸入時，error 清空;
+                username() {
+                    this.error = "";
+                },
+                password() {
+                    this.error = "";
+                }
+
+            },
+            template: `
+            <div>
+              <h1 v-if="loggedUser">Welcome! {{loggedUser}}</h1>
+              <form v-else @submit.prevent="submit">
+                <label>Username</label>
+                <input type="text" v-model="username" :disabled="loading"/>
+                <br/>
+                <label>Password</label>
+                <input type="password" v-model="password" :disabled="loading"/>
+                <br/>
+                <button type="submit" :disabled="loading">Submit</button>
+                <br />
+                <span v-if="error">{{error}}</span>
+              </form>
+            </div>
+	          `
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                component: "user-check"
+            }
+        });
+    </script>
+
+</body>
+
+</html>

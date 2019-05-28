@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <post v-for="post in posts" v-bind="post"></post>
+  </div>
+
+  <script>
+    Vue.component('my-component', {
+        props:['myMessage'],
+        template: '<h1>{{myMessage}}<h1>'
+    });
+
+    new Vue({
+      el: '#app',
+      data:{
+        posts:[
+          {text:'hello',author:'John'},
+          {text:'world',author:'Jack'},
+        ]
+      },
+      components:{
+          post:{
+            props:['author','text'],
+            template: `
+                <div>{{author}}:{{text}}</div>
+            `
+          }
+      }
+    });
+  </script>
+
+</body>
+
+</html>

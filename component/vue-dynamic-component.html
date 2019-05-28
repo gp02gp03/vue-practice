@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <button @click="content='lessons'">lessons</button>
+    <button @click="content='apply'">Apply</button>
+    <br>
+
+    <!--透過keep-alive能將組建的狀態做儲存-->
+    <keep-alive>
+      <!--透過is屬性動態綁定content-->
+      <component :is="content"></component>
+    </keep-alive>
+
+  </div>
+
+  <script>
+    /*
+    三個命名組件方式 =>
+    1. 'my-first-component' => kebab-case
+    2. 'myFirstComponent' => camelCase
+    3. 'MyFirstComponent' => PascalCase
+
+    HTML 中只能使用 kebab-case my-first-component
+    在 template 裡使用的話就都可以(Camel, Pascal)
+    */
+
+    Vue.component('apply', {
+      template: `
+        <form>
+          <textarea></textarea>
+          <button>Submit</button>
+        </form>
+      `,
+    });
+
+    Vue.component('lessons', {
+      template: `
+        <ul>
+          <li>Vue 課程</li>
+          <li>React 課程</li>
+          <li>Angular 課程</li>
+        </ul>
+      `,
+    });
+
+    new Vue({
+      el: '#app',
+      data: {
+        content: 'lessons'
+      }
+    });
+  </script>
+
+</body>
+
+</html>
